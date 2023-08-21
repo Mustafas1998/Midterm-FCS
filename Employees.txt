@@ -1,1 +1,2 @@
-emp001, mustafa, 20230821, male, 6000
+emp001, mustafa, 20230821, male, 4000
+emp002, saad, 20230821, male, 1500

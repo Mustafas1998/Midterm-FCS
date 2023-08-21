@@ -42,8 +42,9 @@ def save(directory, employee_data): # Big 0notation is O(n), n is the number of 
             #https://stackoverflow.com/questions/14619494/how-to-understand-strptime-vs-strftime
             f.write(f"{data['ID']}, {data['username']}, {date}, {data['gender']}, {data['salary']}\n")
 
-def salary_raise(employee_data): # 0(n),n is number of employees
+def salary_raise(employee_data): # 0(n log n) since 2 for loops and the second one runs if ID is == employee['ID], n is number of employees
     """Raise the salary of an employee by percentage"""
+    #https://stackoverflow.com/questions/73604254/big-o-notation-of-a-for-loop-with-an-conditional-inner-loop
     ID = input("Enter ID of the employee: ")
     #https://stackoverflow.com/questions/4260280/if-else-in-a-list-comprehension
     #used list comprehension to create True_employee.
@@ -67,7 +68,7 @@ def stats(employee_data): # O(n) where n is the number of employees
     print(Gender)
 
 
-def remove_employee(employee_data): # O(n) where n is the number of employees
+def remove_employee(employee_data): # O(n log n) same as 'salary raise function'
     """Removes and employee from list of employees by asking for its ID"""
     #https://stackoverflow.com/questions/4260280/if-else-in-a-list-comprehension
     #list.remove(i)
@@ -89,6 +90,17 @@ def display_employees(employee_data): # Big 0notation is O(n log n), n is number
         join_date = data['date'].strftime("%Y%m%d")
         print(f"{data['ID']}, {data['username']}, {join_date}, {data['gender']}, {data['salary']}")
 
+def add_employee(employee_data): # O(n) where n is O(1)
+    # https://www.toppr.com/guides/python-guide/references/methods-and-functions/methods/string/zfill/python-string-zfill/
+    # usage of rjust() to format new emp ID
+    new_ID = f"emp{str(len(employee_data) +1).rjust(3, '0')}"
+    username = input("Enter username of new employee: ")
+    salary = int(input("Enter his salary: "))
+    gender = input("Enter his gender, (male/female): ")
+    employee_data.append({'ID': new_ID, 'username': username, 'date': datetime.datetime.now(), 'gender': gender, 'salary': int(salary)})
+    # usage of now(): https://www.geeksforgeeks.org/python-now-function/
+    print("Employee was added")
+
 def Main(): # Big 0notation is O(n),n is number of employees in system
     """Main program where functions are called according to the menu"""
     employee_data = data_transfer("Employees.txt")
@@ -105,7 +117,7 @@ def Main(): # Big 0notation is O(n),n is number of employees in system
                 if choice == '1':
                     stats(employee_data)
                 elif choice == '2':
-                    print(1)
+                    add_employee(employee_data)
                 elif choice == '3':
                     display_employees(employee_data)
                 elif choice == '4':
