@@ -1,6 +1,6 @@
 import datetime
 
-def data_transfer(directory): # Big 0notation is O(n)
+def data_transfer(directory): # Big 0notation is O(n), n is the number of line in file.txt
     """This function transfer data from file and append them in a list of dictionaries"""
     #https://stackoverflow.com/questions/34976122/import-data-from-file-to-dictionary-in-python
     #using with statement to open a file in read mode.
@@ -32,7 +32,7 @@ def employee_menu(): # Big 0notation is O(1)
     print("1. Check Salary")
     print("2. Exit")
 
-def save(directory, employee_data): # Big 0notation is O(n)
+def save(directory, employee_data): # Big 0notation is O(n), n is the number of employees in employee_data
     """Saves the data edited by admin in Employees.txt file"""
     #https://www.w3schools.com/python/python_file_write.asp
     #used with statement to open a file in write mode.
@@ -44,7 +44,7 @@ def save(directory, employee_data): # Big 0notation is O(n)
 
 
 
-def display_employees(employee_data): # Big 0notation is O(n log n)
+def display_employees(employee_data): # Big 0notation is O(n log n), n is number of employees in employee_data
     """Displays all employees in system in ascending order of the joining date """
     #https://stackoverflow.com/questions/8966538/syntax-behind-sortedkey-lambda
     employee = sorted(employee_data, key=lambda x:x['date'])
@@ -52,3 +52,72 @@ def display_employees(employee_data): # Big 0notation is O(n log n)
     for data in employee:
         join_date = data['date'].strftime("%Y%m%d")
         print(f"{data['ID']}, {data['username']}, {join_date}, {data['gender']}, {data['salary']}")
+
+def Main(): # Big 0notation is O(n),n is number of employees in system
+    """Main program where functions are called according to the menu"""
+    employee_data = data_transfer("Employees.txt")
+    attempt_number = 0
+    attempts_max_number = 5
+    while attempt_number < attempts_max_number:
+        username = input("Enter username: ")
+        password = input("Enter password: ")
+        if username == "admin" and password == "admin123123":
+            print("Welcome Admin!")
+            while True:
+                admin_menu()
+                choice = input("Enter choice:")
+                if choice == '1':
+
+                elif choice == '2':
+
+                elif choice == '3':
+
+                elif choice == '4':
+
+                elif choice == '5':
+
+                elif choice == '6':
+
+                elif choice == '7':
+                    save("Employees.txt", employee_data)
+                    print("Saving Data, Exiting...")
+                    break
+                else:
+                    print("Please select a valid option!")
+        elif (username == 'admin' or password != 'admin123123') or (username != 'admin' or password == 'admin123123'):
+            print("Invalid password and/or username")
+        is_employee = False
+        for employee in employee_data:
+            if employee['username'] == username and password == "":
+                sex = employee['gender']
+                if sex == 'male':
+                    notation = 'Mr.'
+                else:
+                    notation = 'Ms.'
+                print(f"Hello {notation}{username}")
+                while True:
+                    employee_menu()
+                    goal = input("Enter goal: ")
+                    if goal == '1':
+                        print(f"Your salary is ${employee['salary']}")
+                    elif goal == '2':
+                        print("Terminating System")
+                        #https://www.geeksforgeeks.org/python-now-function/ usage of now() function
+                        #link in first function for hours, minutes and seconds formatting
+                        Timestamp = datetime.datetime.now()
+                        formatted_timestamp = Timestamp.strftime("%Y%m%d %H:%M:$S")
+                        with open("Timestamp-login.txt", 'a') as f: #using with statement in append mode.
+                            f.write(f"{username}, {formatted_timestamp}")
+                        break
+                    else:
+                        print("Please select a valid option!")
+                break
+        if not is_employee and (username != "admin" or password != 'admin123123'):
+            attempt_number += 1
+        if attempt_number >= attempts_max_number:
+            print("You have reached maximum number f login attempts. Goodbye.")
+Main()
+
+
+
+
