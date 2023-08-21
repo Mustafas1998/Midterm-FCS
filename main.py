@@ -1,5 +1,5 @@
 import datetime
-
+from collections import  Counter
 def data_transfer(directory): # Big 0notation is O(n), n is the number of line in file.txt
     """This function transfer data from file and append them in a list of dictionaries"""
     #https://stackoverflow.com/questions/34976122/import-data-from-file-to-dictionary-in-python
@@ -42,6 +42,29 @@ def save(directory, employee_data): # Big 0notation is O(n), n is the number of 
             #https://stackoverflow.com/questions/14619494/how-to-understand-strptime-vs-strftime
             f.write(f"{data['ID']}, {data['salary']}, {date}, {data['username']}, {data['gender']}\n")
 
+def salary_raise(employee_data): # 0(n),n is number of employees
+    """Raise the salary of an employee by percentage"""
+    ID = input("Enter ID of the employee: ")
+    #https://stackoverflow.com/questions/4260280/if-else-in-a-list-comprehension
+    #used list comprehension to create True_employee.
+    True_employee = [employee for employee in employee_data if employee['ID'] == ID ]
+    if True_employee:
+        for e in True_employee:
+            raise_percent = float(input("Enter percentage of the raise: "))
+            e['salary'] = int(e['salary'] + (raise_percent / 100) * e['salary'])
+            print("salary raised.")
+    else:
+        print("No employee with such ID")
+
+
+def stats(employee_data):
+    """Displays the number of male and female employees separately"""
+    # https://stackoverflow.com/questions/37438550/how-can-i-count-occurrences-of-values-in-a-list-of-dicts
+    # usage of Counter
+    Gender = Counter()
+    for employee in employee_data:
+        Gender[employee['gender']] += 1
+    print(Gender)
 
 
 def display_employees(employee_data): # Big 0notation is O(n log n), n is number of employees in employee_data
@@ -67,17 +90,17 @@ def Main(): # Big 0notation is O(n),n is number of employees in system
                 admin_menu()
                 choice = input("Enter choice:")
                 if choice == '1':
-
+                    stats(employee_data)
                 elif choice == '2':
 
                 elif choice == '3':
-
+                    display_employees(employee_data)
                 elif choice == '4':
 
                 elif choice == '5':
 
                 elif choice == '6':
-
+                    salary_raise(employee_data)
                 elif choice == '7':
                     save("Employees.txt", employee_data)
                     print("Saving Data, Exiting...")
