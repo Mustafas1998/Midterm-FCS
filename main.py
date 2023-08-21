@@ -1,5 +1,6 @@
 import datetime
 from collections import Counter
+
 def data_transfer(directory): # Big 0notation is O(n), n is the number of line in file.txt
     """This function transfer data from file and append them in a list of dictionaries"""
     #https://stackoverflow.com/questions/34976122/import-data-from-file-to-dictionary-in-python
@@ -170,7 +171,7 @@ def Main(): # Big 0notation is O(n),n is number of employees in system
                         Timestamp = datetime.datetime.now()
                         formatted_timestamp = Timestamp.strftime("%Y%m%d %H:%M:%S")
                         with open("Timestamp-login.txt", 'a') as f:  # using with statement in append mode.
-                            f.write(f"{username}, {formatted_timestamp}\n")
+                            f.write(f"employee {username} logged at: {formatted_timestamp}\n")
                         break
                     else:
                         print("Please select a valid option!")

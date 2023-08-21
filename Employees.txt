@@ -1,3 +1,2 @@
 emp001, mustafa, 20230821, male, 8000
-
 emp002, sara, 20230821, female, 2000
